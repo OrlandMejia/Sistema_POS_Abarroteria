@@ -12,7 +12,28 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+//RUTA PRINCIPAL DE LA PAGINA QUE CARGA POR DEFAULT HASTA EL MOMENTO
 Route::get('/', function () {
-    return view('welcome');
+    return view('template');
+});
+
+//RUTA DEL LOGIN lo que esté dentro de login es lo que debemos colocar en la barra de navegación osea www.algo.com/login
+Route::get('/login', function () {
+    // aqui lo que hace es que  carga la vista login.blade.php
+    return view('auth.login');
+});
+
+//RUTA 401
+Route::get('/401', function (){
+    return view('pages.401');
+});
+
+//RUTA 404
+Route::get('/404', function(){
+    return view('pages.404');
+});
+
+//RUTA 500
+Route::get('/500', function(){
+    return view('pages.500');
 });
