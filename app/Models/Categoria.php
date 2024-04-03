@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Categoria extends Model
 {
     use HasFactory;
+    //relacion muchos a muchos con productos
+    public function productos(){
+        return $this->belongsToMany(Producto::class)->withTimestamps();
+    }
 }
