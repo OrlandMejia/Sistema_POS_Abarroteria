@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('proveedores', function (Blueprint $table) {
             $table->id();
+            $table->foreignId( 'persona_id' )->unique()->constrained('personas')->onDelete(''); // sintaxis para utilizar o modelar una llave foranea, aca referenciamos
+            //en este caso con foreignId que la llave foranea segun el modelo es persona_id de la tabla personas, LE CREAMOS TAMBIEN un metodo onDelete('cascade')
+            //que hace que se elimine el registro relacionado si este ya no existe, es decir si se elimina algo de la tabla persona tambien su proveedor
             $table->timestamps();
         });
     }

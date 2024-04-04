@@ -17,6 +17,11 @@ Route::get('/', function () {
     return view('template');
 });
 
+//RUTA DE LA VISTA PARA QUE MUESTRE EL PANEL PRINCIPAL y podamos usarla con el nombre de panel para los route
+Route::view('/panel','panel.index')->name('panel');
+
+
+
 //RUTA DEL LOGIN lo que esté dentro de login es lo que debemos colocar en la barra de navegación osea www.algo.com/login
 Route::get('/login', function () {
     // aqui lo que hace es que  carga la vista login.blade.php

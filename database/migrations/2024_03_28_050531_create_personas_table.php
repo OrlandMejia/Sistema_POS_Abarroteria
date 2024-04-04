@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('direccion',80);
             $table->string('tipo_persona',20);
             $table->tinyInteger('estado')->default(1); //le asignamos un valor por defecto al campo que en este caso es un 1
-            $table->timestamps();
+            $table->foreignId('documento_id')->unique()->constrained('documentos')->onDelete('cascade');
+            $table->timestamps(); //se genera por default y signfica que se registra la fecha y hora actual 
         });
     }
 

@@ -12,4 +12,9 @@ class Categoria extends Model
     public function productos(){
         return $this->belongsToMany(Producto::class)->withTimestamps();
     }
+
+    //relacion uno a uno a la inversa con caracteristicas
+    public function caracteristica() {
+        return $this->belongsTo(Caracteristica::class);
+    }
 }
