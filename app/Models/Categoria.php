@@ -17,4 +17,6 @@ class Categoria extends Model
     public function caracteristica() {
         return $this->belongsTo(Caracteristica::class);
     }
+    //guardamos unicamente el dato que se almacena en esa tabla en relación a categoria el cual es caracteristica segun el modelo
+    protected  $fillable = [ 'caracteristica_id'];
 }

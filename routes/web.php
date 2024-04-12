@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\categoriasController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,7 +21,10 @@ Route::get('/', function () {
 //RUTA DE LA VISTA PARA QUE MUESTRE EL PANEL PRINCIPAL y podamos usarla con el nombre de panel para los route
 Route::view('/panel','panel.index')->name('panel');
 
-
+//RUTA PARA LAS CATEGORIAS, ahora esto cambio al controlador de categoriaController
+//Route::view('/categoria','categoria.index');
+//AHORA CONFIGURAMOS LAS RUTAS CON EL CONTROLADOR YA CREADO y este al ser un recurso lo hacemos de la siguiente forma
+Route::resource('categorias',categoriasController::class);
 
 //RUTA DEL LOGIN lo que esté dentro de login es lo que debemos colocar en la barra de navegación osea www.algo.com/login
 Route::get('/login', function () {

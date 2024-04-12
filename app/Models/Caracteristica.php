@@ -23,4 +23,8 @@ class Caracteristica extends Model
     public function presentacione(){
         return $this->hasOne(Presentacione::class);
     }
+    //se guarda en objeto los datos que se quieren guardar en la tabla caracteristica y que está enlazada con categoria
+    protected $fillable = [
+        'nombre',
+        'descripcion'];
 }
