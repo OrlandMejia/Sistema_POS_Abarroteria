@@ -3,7 +3,7 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Inicio</div>
-                            <a class="nav-link" href="{{ route('panel')}}">
+                            <a class="nav-link @if(Request::is('panel*')) active @endif" href="{{ route('panel')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Panel
                             </a>
@@ -52,11 +52,15 @@
                             </div-->
 
                             <div class="sb-sidenav-menu-heading">Modulos</div>
-                            <a class="nav-link" href="{{ route('categorias.index') }}">
+                            <a class="nav-link @if(Request::is('categorias*')) active @endif" href="{{ route('categorias.index') }}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-tags"></i></div>
                                 Categorias
                             </a>
-                            <a class="nav-link" href="#">
+                            <a class="nav-link @if(Request::is('marcas*')) active @endif" href="{{ route('marcas.index') }}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-folder"></i></div>
+                                Marcas
+                            </a>
+                            <a class="nav-link @if(Request::is('tables*')) active @endif" href="#">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Tables
                             </a>

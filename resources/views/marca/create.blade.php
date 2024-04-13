@@ -14,16 +14,16 @@
 
 @section('content')
 <div class="container-fluid px-4">
-    <h1 class="mt-4 text-center">Crear Categorias</h1>
+    <h1 class="mt-4 text-center">Registrar Marca</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="{{ route('panel') }}">Inicio</a></li>
-        <li class="breadcrumb-item active"><a href="{{ route('categorias.index') }}">Categorias</a></li>
-        <li class="breadcrumb-item">Crear Categoría</a></li>
+        <li class="breadcrumb-item active"><a href="{{ route('marcas.index') }}">Marcas</a></li>
+        <li class="breadcrumb-item">Registrar Marca</a></li>
     </ol>
     <!--CREAMOS NUESTRO FORMULARIO Y COLOCAMOS QUE SEA TIPO POST Y QUE EL ACTION HACIA DONDE IRÁ SERÁ A LA FUNCION STORE PARA GUARDAR
     Tmbien decimos que será tipo contenedor que tendrá borde de 3 y border primary color azul con un padding de 4 y un margin top de 3-->
     <div class="container w-100 border border-3 border-primary rounded p-4 mt-3">
-        <form action="{{ route('categorias.store') }}" method="POST">
+        <form action="{{ route('marcas.store') }}" method="POST">
             @csrf
             <div class="row g-3">
                 <div class="col-md-6">

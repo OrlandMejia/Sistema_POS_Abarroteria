@@ -18,4 +18,6 @@ class Marca extends Model
     public function caracteristica(){
         return $this->belongsTo(Caracteristica::class);
     }
+    //se guarda en objeto los datos que se quieren guardar en la tabla caracteristica y que está enlazada con categoria
+    protected  $fillable = [ 'caracteristica_id'];
 }
