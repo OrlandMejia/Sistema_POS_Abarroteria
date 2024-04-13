@@ -11,6 +11,8 @@
 <!--COLOCAMOS UNA VALIDACION PARA CUANDO HAYAMOS REGISTRADO UN PRODUCTO O CATEGORIA CORRECTAMENTE-->
 @if (session('success'))
 <script>
+    //vamos a mostrar diferentes mensajes de exito o error cuando hagamos alguna accion en nuestros formularios
+    let message = "{{ session('success')}}";
     const Toast = Swal.mixin({
   toast: true,
   position: "top-end",
@@ -24,7 +26,7 @@
 });
 Toast.fire({
   icon: "success",
-  title: "¡Registro Guardado con Exito!"
+  title: message
 });
 </script>
 @endif
@@ -39,7 +41,7 @@ Toast.fire({
 <div class="mb-4">
 <!--BOTON QUE NOS AYUDARÁ A REDIRIGIRNOS A UNA NUEVA VISTA PARA INCLUIR UNA NUEVA CATEGORIA-->
 <a href="{{ route('categorias.create') }}">
-    <button type="button" class="btn btn-primary">Añadir Nuevo Registro</button>
+    <button type="button" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Añadir Nuevo Registro</button>
 </a>
 </div>
 
@@ -54,31 +56,77 @@ Toast.fire({
         <table id="datatablesSimple" class="table table-striped" style="border-collapse: collapse;">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Position</th>
-                    <th>Office</th>
-                    <th>Age</th>
-                    <th>Start date</th>
-                    <th>Salary</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
                 <tbody>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                        <td>$320,800</td>
-                    </tr>
-                    <tr>
-                        <td>Jonas Alexander</td>
-                        <td>Developer</td>
-                        <td>San Francisco</td>
-                        <td>30</td>
-                        <td>2010/07/14</td>
-                        <td>$86,500</td>
-                    </tr>
+                    @foreach ($categorias as $categoria)
+                        <tr>
+                            <!--SE MANDAN LAS VARIABLES DEL ARCHIVO CONTROLLER AL HTML-->
+                            <!--en este caso recorremos el array que contiene la variable categorias y decimos que lo que tenga su relacion
+                                de caracteristica nos traiga lo que es el nombre-->
+                            <td> {{ $categoria->caracteristica->nombre  }} </td>
+                            <td> {{ $categoria->caracteristica->descripcion}}</td>
+                            <td> 
+                                <!--INDCAMOS QUE SI LO QUE RECORRE EL ARREGLO CATEGORIA EN LA TABLA CARACTERISTICA SU ESTADO ES UNO
+                                    ENTONCES MUESTRA UN SPAN CON UN FW BOLDER PARA QUE APAREZCA EN NEGRITA, UN ROUNDED PARA QUE SEA CON
+                                    BORDER REDONDEADOS, UN PADDING P-1 DE UNO, UN BACKGROUND BG-SUCCESS Y UN TEXTO BLANCO WITHE-->
+                                @if ($categoria->caracteristica->estado == 1) 
+                                <span class="fw-bolder rounded p-1 bg-success text-white">Activo</span>
+                                @else
+                                <span class="fw-bolder rounded p-1 bg-danger text-white">Eliminado</span>
+                                @endif
+                            </td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                    <form action="{{route('categorias.edit',['categoria'=>$categoria])}}" method="GET">
+                                        <button type="submit" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i> Editar</button>
+                                    </form>
+                                    @if ($categoria->caracteristica->estado == 1)
+                                    <button type="button" class="btn btn-danger" style="margin-left: 10px; border-radius: 5px;" 
+                                    data-bs-toggle="modal" data-bs-target="#confirmacion-{{$categoria->id}}">
+                                    <i class="fa-solid fa-trash"></i> Eliminar</button>
+                                    @else
+                                    <button type="button" class="btn btn-success" style="margin-left: 10px; border-radius: 5px;" 
+                                    data-bs-toggle="modal" data-bs-target="#confirmacion-{{$categoria->id}}">
+                                    <i class="fas fa-undo"></i>Restaurar</button>
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Modal -->
+                        <div class="modal fade" id="confirmacion-{{$categoria->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmación</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!--ACA USAREMOS UN OPERADOR TERNIARIO PARA PODER MOSTRAR LOS MENSAJES DE MEJOR MANERA YA SEA PARA
+                                        ESCOGER LA OPCION DE ELIMINAR O ESCOGER LA OPCION DE RESTAURAR-->
+                                {{ $categoria->caracteristica->estado == 1 ? '¿Está seguro de Eliminar la Categoria?' : '¿Seguro que quiere Restaurar esta categoria?'}}
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                
+                                <form action="{{ route('categorias.destroy',['categoria'=>$categoria->id])}}" method="POST">
+                                    @method('DELETE')
+                                    @csrf
+                                    @if ($categoria->caracteristica->estado == 1)
+                                    <button type="submit" class="btn btn-danger">Confirmar</button>
+                                    @else
+                                    <button type="submit" class="btn btn-success">Confirmar</button>
+                                    @endif
+                                </form>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        @endforeach
                 </tbody>
         </table>
     </div>

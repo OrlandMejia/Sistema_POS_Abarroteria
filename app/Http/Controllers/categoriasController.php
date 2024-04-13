@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCategoriaRequest;
+use App\Http\Requests\UpdateCategoriaRequest;
 use App\Models\Caracteristica;
+use App\Models\Categoria;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,8 +17,13 @@ class categoriasController extends Controller
      */
     public function index()
     {
+        //antes de retornar la vista vamos a recuperar los datos de la db
+        //usamos with para  pasarle variables a la vista, en este caso las categorias, mismo nombre que nuestra relacion en el modelo
+        $categorias = Categoria::with('caracteristica')->latest()->get(); //usamos latest para mostrar en orden de creación
+        //dd($categorias);
         //retornar la vista cada que vayamos al index de categorias
-        return view('categoria.index');
+        //le asignamos a la vista una variable categorias para luego poder utilizarla en la vista
+        return view('categoria.index',['categorias'=>$categorias]);
     }
 
     /**
@@ -82,24 +89,46 @@ class categoriasController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Categoria $categoria)
     {
-        //
+        return view('categoria.edit',['categoria'=>$categoria]);
     }
 
     /**
      * Update the specified resource in storage.
+     * usamos esa clase en el http request que creamos para validar el update
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCategoriaRequest $request, Categoria $categoria)
     {
-        //
+        //CREAMOS UN HTTP REQUEST
+        //haremos la actualizacion masiva tambien
+        Caracteristica::where('id',$categoria->caracteristica->id)->update($request->validated());
+        return redirect()->route('categorias.index')->with('success','Categoria Editada');
     }
 
     /**
      * Remove the specified resource from storage.
+     * funcion para cambiar el estado de la categoria, ahora si vamos a recibir el string id por eso lo dejamos ahi
      */
     public function destroy(string $id)
     {
-        //
+        //cambiar el estado del producto para "eliminarlo"
+        $message = '';
+        $categoria = Categoria::find($id);
+        if($categoria->caracteristica->estado == 1){
+            Caracteristica::where('id',$categoria->caracteristica->id)->update([
+                'estado' => 0
+            ]);
+            $message = 'Categoría Eliminada';
+        }
+        else{
+            Caracteristica::where('id',$categoria->caracteristica->id)->update([
+                'estado' => 1
+            ]);
+            $message = 'Categoría Restaurada';
+        }
+
+        //redireccionar despues de que cambie la categoria
+        return redirect()->route('categorias.index')->with('success',$message);
     }
 }
