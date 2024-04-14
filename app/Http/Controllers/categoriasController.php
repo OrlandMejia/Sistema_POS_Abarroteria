@@ -91,6 +91,7 @@ class categoriasController extends Controller
      */
     public function edit(Categoria $categoria)
     {
+        //dd($categoria);
         return view('categoria.edit',['categoria'=>$categoria]);
     }
 

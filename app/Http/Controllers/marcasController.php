@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMarcasRequest;
+use App\Http\Requests\UpdateMarcaRequest;
 use App\Models\Marca;
 use App\Models\Caracteristica;
+use App\Models\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -76,17 +78,26 @@ class marcasController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Marca $marca)
     {
+        //dd($marca);
         //
+        return view('marca.edit',['marca'=>$marca]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateMarcaRequest $request, Marca $marca)
     {
-        //
+        //CREAMOS UN HTTP REQUEST
+        //haremos la actualizacion masiva tambien
+        /**
+         * Caracteristica::where('id',$categoria->caracteristica->id)->update($request->validated());
+           *return redirect()->route('categorias.index')->with('success','Categoria Editada');
+         */
+        Caracteristica::where('id',$marca->caracteristica->id)->update($request->validated());
+        return redirect()->route('marcas.index')->with('success','Marca Editada');
     }
 
     /**
