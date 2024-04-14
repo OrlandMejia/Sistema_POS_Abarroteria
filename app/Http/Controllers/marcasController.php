@@ -105,6 +105,22 @@ class marcasController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $message = '';
+        $marca = Marca::find($id);
+        if($marca->caracteristica->estado == 1){
+            Caracteristica::where('id',$marca->caracteristica->id)->update([
+                'estado' => 0
+            ]);
+            $message = 'Marca Eliminada';
+        }
+        else{
+            Caracteristica::where('id',$marca->caracteristica->id)->update([
+                'estado' => 1
+            ]);
+            $message = 'Marca Restaurada';
+        }
+
+        //redireccionar despues de que cambie la categoria
+        return redirect()->route('marcas.index')->with('success',$message);
     }
 }

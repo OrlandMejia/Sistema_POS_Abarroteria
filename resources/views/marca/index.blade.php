@@ -8,6 +8,26 @@
 @endpush
 
 @section('content')
+    @if (session('success'))
+        <script>
+            let message = "{{ session('success') }}";
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: message
+            });
+        </script>
+    @endif
     <div class="container-fluid px-4">
         <h1 class="mt-4 text-center">Marcas Registradas</h1>
         <ol class="breadcrumb mb-4">
@@ -39,45 +59,75 @@
                     </thead>
                     <tbody>
                         @foreach ($marcas as $marca)
-                        <tr>
-                            <td>{{ $marca->caracteristica->nombre }}</td>
-                            <td>{{ $marca->caracteristica->descripcion }}</td>
-                            <td style="text-align: center;">
-                                <!--INDCAMOS QUE SI LO QUE RECORRE EL ARREGLO CATEGORIA EN LA TABLA CARACTERISTICA SU ESTADO ES UNO
-                                    ENTONCES MUESTRA UN SPAN CON UN FW BOLDER PARA QUE APAREZCA EN NEGRITA, UN ROUNDED PARA QUE SEA CON
-                                    BORDER REDONDEADOS, UN PADDING P-1 DE UNO, UN BACKGROUND BG-SUCCESS Y UN TEXTO BLANCO WITHE-->
-                                @if ($marca->caracteristica->estado == 1)
-                                    <span class="rounded p-1 bg-success text-white">Activo</span>
-                                @else
-                                    <span class="rounded p-1 bg-danger text-white">Eliminado</span>
-                                @endif
-                            </td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                    <form action="{{ route('marcas.edit', ['marca' => $marca]) }}" method="GET">
-                                        <button type="submit" class="btn btn-warning"><i
-                                                class="fa-solid fa-pen-to-square"></i> Editar</button>
-                                    </form>
+                            <tr>
+                                <td>{{ $marca->caracteristica->nombre }}</td>
+                                <td>{{ $marca->caracteristica->descripcion }}</td>
+                                <td style="text-align: center;">
+                                    <!--INDCAMOS QUE SI LO QUE RECORRE EL ARREGLO CATEGORIA EN LA TABLA CARACTERISTICA SU ESTADO ES UNO
+                                            ENTONCES MUESTRA UN SPAN CON UN FW BOLDER PARA QUE APAREZCA EN NEGRITA, UN ROUNDED PARA QUE SEA CON
+                                            BORDER REDONDEADOS, UN PADDING P-1 DE UNO, UN BACKGROUND BG-SUCCESS Y UN TEXTO BLANCO WITHE-->
                                     @if ($marca->caracteristica->estado == 1)
-                                        <button type="button" class="btn btn-danger"
-                                            style="margin-left: 10px; border-radius: 5px;" data-bs-toggle="modal"
-                                            data-bs-target="#confirmacion-{{ $marca->id }}">
-                                            <i class="fa-solid fa-trash"></i> Eliminar</button>
+                                        <span class="rounded p-1 bg-success text-white">Activo</span>
                                     @else
-                                        <button type="button" class="btn btn-success"
-                                            style="margin-left: 10px; border-radius: 5px;" data-bs-toggle="modal"
-                                            data-bs-target="#confirmacion-{{ $marca->id }}">
-                                            <i class="fas fa-undo"></i>Restaurar</button>
+                                        <span class="rounded p-1 bg-danger text-white">Eliminado</span>
                                     @endif
-                                </div>
-                            </td>
-                        @endforeach
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                        <form action="{{ route('marcas.edit', ['marca' => $marca]) }}" method="GET">
+                                            <button type="submit" class="btn btn-warning"><i
+                                                    class="fa-solid fa-pen-to-square"></i> Editar</button>
+                                        </form>
+                                        @if ($marca->caracteristica->estado == 1)
+                                            <button type="button" class="btn btn-danger"
+                                                style="margin-left: 10px; border-radius: 5px;" data-bs-toggle="modal"
+                                                data-bs-target="#confirmacion-{{ $marca->id }}">
+                                                <i class="fa-solid fa-trash"></i> Eliminar</button>
+                                        @else
+                                            <button type="button" class="btn btn-success"
+                                                style="margin-left: 10px; border-radius: 5px;" data-bs-toggle="modal"
+                                                data-bs-target="#confirmacion-{{ $marca->id }}">
+                                                <i class="fas fa-undo"></i>Restaurar</button>
+                                        @endif
+                                    </div>
+                                </td>
+
                         </tr>
+                        <!-- Modal -->
+                        <div class="modal fade" id="confirmacion-{{ $marca->id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmación</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {{$marca->caracteristica->estado == 1 ? '¿Seguro que desea Eliminar la Marca?' : '¿Desea Restaurar la Marca?'}}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cerrar</button>
+                                        <form action="{{ route('marcas.destroy',['marca'=>$marca]) }}"  method="POST">
+                                            @method('DELETE')
+                                            @csrf
+                                            @if ($marca->caracteristica->estado == 1)
+                                                <button type="submit" class="btn btn-danger">Confirmar</button>
+                                            @else
+                                                <button type="submit" class="btn btn-success">Confirmar</button>
+                                            @endif
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
-@endsection
+    @endsection
 
     @push('js')
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>

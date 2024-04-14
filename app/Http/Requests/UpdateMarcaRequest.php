@@ -30,7 +30,7 @@ class UpdateMarcaRequest extends FormRequest
         primero, crear una variable categoria, donde las caractersticas tambien estan enlazadas, y tendrá como valor un this que apunte
         a la ruta de categoria que es el modelo el cual luego guardaremos en otra variable la categoria id de la tabla caracteristica
         y que apunte directamente al ID del producto o dato que estemos editando*/
-            'nombre' => 'required|max:60|unique:marcas,nombre'.$caracteristicaId,
+            'nombre' => 'required|max:60|unique:caracteristicas,nombre,'.$caracteristicaId,
             'descripcion' => 'nullable|max:255'
         ];
     }
