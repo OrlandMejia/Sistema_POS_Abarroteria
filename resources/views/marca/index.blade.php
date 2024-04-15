@@ -91,7 +91,6 @@
                                         @endif
                                     </div>
                                 </td>
-
                         </tr>
                         <!-- Modal -->
                         <div class="modal fade" id="confirmacion-{{ $marca->id}}" tabindex="-1" aria-labelledby="exampleModalLabel"

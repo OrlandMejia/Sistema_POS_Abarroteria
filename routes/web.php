@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\categoriasController;
 use App\Http\Controllers\marcasController;
+use App\Http\Controllers\presentacionesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +29,8 @@ Route::view('/panel','panel.index')->name('panel');
 Route::resource('categorias',categoriasController::class);
 
 Route::resource('marcas',marcasController::class);
+
+Route::resource('presentaciones',presentacionesController::class);
 //RUTA DEL LOGIN lo que esté dentro de login es lo que debemos colocar en la barra de navegación osea www.algo.com/login
 Route::get('/login', function () {
     // aqui lo que hace es que  carga la vista login.blade.php

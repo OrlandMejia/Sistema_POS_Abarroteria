@@ -1,13 +1,13 @@
 <div id="layoutSidenav_nav">
-                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                    <div class="sb-sidenav-menu">
-                        <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Inicio</div>
-                            <a class="nav-link @if(Request::is('panel*')) active @endif" href="{{ route('panel')}}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Panel
-                            </a>
-                            <!--div class="sb-sidenav-menu-heading">Interface</div>
+    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+        <div class="sb-sidenav-menu">
+            <div class="nav">
+                <div class="sb-sidenav-menu-heading">Inicio</div>
+                <a class="nav-link @if (Request::is('panel*')) active @endif" href="{{ route('panel') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    Panel
+                </a>
+                <!--div class="sb-sidenav-menu-heading">Interface</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Layouts
@@ -51,24 +51,31 @@
                                 </nav>
                             </div-->
 
-                            <div class="sb-sidenav-menu-heading">Modulos</div>
-                            <a class="nav-link @if(Request::is('categorias*')) active @endif" href="{{ route('categorias.index') }}">
-                                <div class="sb-nav-link-icon"><i class="fa-solid fa-tags"></i></div>
-                                Categorias
-                            </a>
-                            <a class="nav-link @if(Request::is('marcas*')) active @endif" href="{{ route('marcas.index') }}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-folder"></i></div>
-                                Marcas
-                            </a>
-                            <a class="nav-link @if(Request::is('tables*')) active @endif" href="#">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Tables
-                            </a>
-                        </div>
+                <div class="sb-sidenav-menu-heading">Modulos</div>
+                <a class="nav-link @if (Request::is('categorias*')) active @endif"
+                    href="{{ route('categorias.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-tags"></i></div>
+                    Categorias
+                </a>
+                <a class="nav-link @if (Request::is('marcas*')) active @endif" href="{{ route('marcas.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-folder"></i></div>
+                    Marcas
+                </a>
+                <a class="nav-link @if (Request::is('presentaciones*')) active @endif"
+                    href="{{ route('presentaciones.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-chalkboard"></i>
                     </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Bienvenido</div>
-                        Start Bootstrap
-                    </div>
-                </nav>
+                    Presentaciones
+                </a>
+                <a class="nav-link @if (Request::is('tables*')) active @endif" href="#">
+                    <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                    Tables
+                </a>
             </div>
+        </div>
+        <div class="sb-sidenav-footer">
+            <div class="small">Bienvenido</div>
+            Start Bootstrap
+        </div>
+    </nav>
+</div>
