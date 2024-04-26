@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
+use App\Models\Marca;
+use App\Models\Presentacione;
 use Illuminate\Http\Request;
 
 class ProductoController extends Controller
@@ -12,6 +15,7 @@ class ProductoController extends Controller
     public function index()
     {
         //
+        return view('producto.index');
     }
 
     /**
@@ -19,7 +23,16 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        //
+        //PARA MANDAR A LLAMAR A LAS MARCAS CREAMOS UNA VARIABLE QUE LLAME A TODAS LAS MARCAS
+        //AHORA PARA QUE NOS MUESTRE UNICAMENTE LAS MARCAS QUE ESTÁN ACTIVAS UTILIZAMOS EL METODO JOIN PARA UNIR TABLAS
+        $marcas = Marca::join('caracteristicas as c', 'marcas.caracteristica_id','=','c.id')->where('c.estado',1)->get();
+
+        //AHORA HACEMOS EXACTAMENTE LO MISMO CON LAS PRESENTACIONES QUE SE NOS SOLICITAN
+        $presentaciones = Presentacione::join('caracteristicas as c','presentaciones.caracteristica_id','=','c.id')->where('c.estado',1)->get();
+        
+        $categorias = Categoria::join('caracteristicas as c', 'categorias.caracteristica_id','=','c.id')->where('c.estado',1)->get();
+        //VAMOS A MANDARLA A LA VISTA .CREATE A TRAVES DEL METODO COMPACT
+        return view('producto.create',compact('marcas','presentaciones','categorias'));
     }
 
     /**

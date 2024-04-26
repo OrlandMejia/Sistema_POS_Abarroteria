@@ -67,6 +67,12 @@
                     </div>
                     Presentaciones
                 </a>
+                <a class="nav-link @if (Request::is('productos*')) active @endif"
+                href="{{ route('productos.index') }}">
+                <div class="sb-nav-link-icon"><i class="fas fa-tag"></i>
+                </div>
+                Productos
+            </a>
                 <a class="nav-link @if (Request::is('tables*')) active @endif" href="#">
                     <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                     Tables

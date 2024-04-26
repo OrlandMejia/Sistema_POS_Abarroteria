@@ -8,9 +8,41 @@
 @endpush
 
 @section('content')
-    
+<div class="container-fluid px-4">
+    <h1 class="mt-4 text-center">Productos Registrados</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ route('panel') }}">Inicio</a></li>
+        <li class="breadcrumb-item active">Productos</li>
+    </ol>
+    <div class="mb-4">
+        <!--BOTON QUE NOS AYUDARÁ A REDIRIGIRNOS A UNA NUEVA VISTA PARA INCLUIR UNA NUEVA CATEGORIA-->
+        <a href="{{ route('productos.create') }}">
+            <button type="button" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Añadir Nuevo Producto</button>
+        </a>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1">
+            </i>
+            Tabla Productos
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple" class="table table-striped" style="border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('js')
-    
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+<script src="{{ asset('js/datatables-simple-demo.js') }}"></script>
 @endpush

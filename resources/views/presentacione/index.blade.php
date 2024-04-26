@@ -37,7 +37,8 @@
         <div class="mb-4">
             <!--BOTON QUE NOS AYUDARÁ A REDIRIGIRNOS A UNA NUEVA VISTA PARA INCLUIR UNA NUEVA CATEGORIA-->
             <a href="{{ route('presentaciones.create') }}">
-                <button type="button" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Añadir Nueva Presentación</button>
+                <button type="button" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Añadir Nueva
+                    Presentación</button>
             </a>
         </div>
         <div class="card mb-4">
@@ -64,8 +65,8 @@
                                 <td>{{ $presentaciones->caracteristica->descripcion }}</td>
                                 <td style="text-align: center;">
                                     <!--INDCAMOS QUE SI LO QUE RECORRE EL ARREGLO CATEGORIA EN LA TABLA CARACTERISTICA SU ESTADO ES UNO
-                                            ENTONCES MUESTRA UN SPAN CON UN FW BOLDER PARA QUE APAREZCA EN NEGRITA, UN ROUNDED PARA QUE SEA CON
-                                            BORDER REDONDEADOS, UN PADDING P-1 DE UNO, UN BACKGROUND BG-SUCCESS Y UN TEXTO BLANCO WITHE-->
+                                                ENTONCES MUESTRA UN SPAN CON UN FW BOLDER PARA QUE APAREZCA EN NEGRITA, UN ROUNDED PARA QUE SEA CON
+                                                BORDER REDONDEADOS, UN PADDING P-1 DE UNO, UN BACKGROUND BG-SUCCESS Y UN TEXTO BLANCO WITHE-->
                                     @if ($presentaciones->caracteristica->estado == 1)
                                         <span class="rounded p-1 bg-success text-white">Activo</span>
                                     @else
@@ -74,7 +75,9 @@
                                 </td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                        <form action="{{ route('presentaciones.edit', ['presentacione' => $presentaciones]) }}" method="GET">
+                                        <form
+                                            action="{{ route('presentaciones.edit', ['presentacione' => $presentaciones]) }}"
+                                            method="GET">
                                             <button type="submit" class="btn btn-warning"><i
                                                     class="fa-solid fa-pen-to-square"></i> Editar</button>
                                         </form>
@@ -92,41 +95,42 @@
                                     </div>
                                 </td>
                             </tr>
-                                                    <!-- Modal -->
-                        <div class="modal fade" id="confirmacion-{{ $presentaciones->id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmación</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        {{$presentaciones->caracteristica->estado == 1 ? '¿Seguro que desea Eliminar la Presentación?' : '¿Desea Restaurar la Presentación?'}}
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Cerrar</button>
-                                        <form action="{{ route('presentaciones.destroy',['presentacione'=>$presentaciones]) }}"  method="POST">
-                                            @method('DELETE')
-                                            @csrf
-                                            @if ($presentaciones->caracteristica->estado == 1)
-                                                <button type="submit" class="btn btn-danger">Confirmar</button>
-                                            @else
-                                                <button type="submit" class="btn btn-success">Confirmar</button>
-                                            @endif
-                                        </form>
+                            <!-- Modal -->
+                            <div class="modal fade" id="confirmacion-{{ $presentaciones->id }}" tabindex="-1"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmación</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{ $presentaciones->caracteristica->estado == 1 ? '¿Seguro que desea Eliminar la Presentación?' : '¿Desea Restaurar la Presentación?' }}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Cerrar</button>
+                                            <form
+                                                action="{{ route('presentaciones.destroy', ['presentacione' => $presentaciones]) }}"
+                                                method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                @if ($presentaciones->caracteristica->estado == 1)
+                                                    <button type="submit" class="btn btn-danger">Confirmar</button>
+                                                @else
+                                                    <button type="submit" class="btn btn-success">Confirmar</button>
+                                                @endif
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
-
     </div>
 
 @endsection

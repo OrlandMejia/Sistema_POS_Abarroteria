@@ -19,7 +19,7 @@
     <!-- COLOCACION DE UN COMPONENTE EL CUAL CREAMOS EN COMPONENTES EN VIEWS DONDE ESTÁ ALMACENADO LA BARRA DE NAVEGACIÓN-->
     <x-navigation-header/>
         <div id="layoutSidenav">
-    <!--Menu lateral colocado como componente-->
+            <!--Menu lateral colocado como componente-->
             <x-navigation-sidebar/>
                 <div id="layoutSidenav_content">
                     <main>
