@@ -3,6 +3,7 @@
 use App\Http\Controllers\categoriasController;
 use App\Http\Controllers\marcasController;
 use App\Http\Controllers\presentacionesController;
+use App\Http\Controllers\ProductoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,11 +27,17 @@ Route::view('/panel','panel.index')->name('panel');
 //RUTA PARA LAS CATEGORIAS, ahora esto cambio al controlador de categoriaController
 //Route::view('/categoria','categoria.index');
 //AHORA CONFIGURAMOS LAS RUTAS CON EL CONTROLADOR YA CREADO y este al ser un recurso lo hacemos de la siguiente forma
-Route::resource('categorias',categoriasController::class);
-
+/*Route::resource('categorias',categoriasController::class);
 Route::resource('marcas',marcasController::class);
-
 Route::resource('presentaciones',presentacionesController::class);
+*/
+//OBJETO QUE CONTIENE TODAS LAS RUTAS PARA SU MEJOR IMPLEMENTACIÓN
+Route::resources([
+    'categorias' =>  categoriasController::class,  //Recursos que se encargan de crear las rutas correspondientes a una sola acc
+    'presentaciones' => presentacionesController::class,
+    'marcas' => marcasController::class,
+    'productos' => ProductoController::class
+]);
 //RUTA DEL LOGIN lo que esté dentro de login es lo que debemos colocar en la barra de navegación osea www.algo.com/login
 Route::get('/login', function () {
     // aqui lo que hace es que  carga la vista login.blade.php

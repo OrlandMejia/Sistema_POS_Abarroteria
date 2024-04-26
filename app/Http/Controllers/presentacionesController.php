@@ -85,5 +85,22 @@ class presentacionesController extends Controller
     public function destroy(string $id)
     {
         //
+        $message = '';
+        $presentaciones = Presentacione::find($id);
+        if($presentaciones->caracteristica->estado == 1){
+            Caracteristica::where('id',$presentaciones->caracteristica->id)->update([
+                'estado' => 0
+            ]);
+            $message = 'Presentacion Eliminada';
+        }
+        else{
+            Caracteristica::where('id',$presentaciones->caracteristica->id)->update([
+                'estado' => 1
+            ]);
+            $message = 'Presentación Restaurada';
+        }
+
+        //redireccionar despues de que cambie la categoria
+        return redirect()->route('presentaciones.index')->with('success',$message);
     }
 }
