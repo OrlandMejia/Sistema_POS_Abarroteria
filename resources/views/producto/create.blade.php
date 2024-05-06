@@ -21,7 +21,8 @@
         <li class="breadcrumb-item">Crear Producto</a></li>
     </ol>
     <div class="container w-100 border border-3 border-primary rounded p-4 mt-3">
-        <form action="{{ route('productos.store') }}" method="POST">
+        <!-- UTILIZAMOS LA PROPIEDAD enctype= "multipart/form-data" PARA QUE LOS ARCHIVOS TIPO FILE SE ENVIEN-->
+        <form action="{{ route('productos.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row g-3">
                 <div class="col-md-6 mb-2">
@@ -70,7 +71,7 @@
                     <select name="marca_id" id="marca_id" class="form-control selectpicker show-tick" data-live-search="true" title="Selecciona una Marca" data-size="5">
                         <!-- VAMOS A RECORRER LA VARIABLE MARCA PARA MOSTRARLO-->
                         @foreach ($marcas as $item)
-                            <option value="{{ $item->id }}">{{ $item->caracteristica->nombre}}</option>
+                            <option value="{{ $item->id }}"{{ old('marca_id') == $item->id ? 'selected' : '' }}>{{ $item->nombre}}</option>
                         @endforeach
                     </select>
                     @error('marca_id')
@@ -83,7 +84,7 @@
                     <select name="presentacione_id" id="presentacione_id" class="form-control selectpicker show-tick" data-live-search="true" title="Selecciona una Presentacion" data-size="5">
                         <!-- VAMOS A RECORRER LA VARIABLE MARCA PARA MOSTRARLO-->
                         @foreach ($presentaciones as $item)
-                            <option value="{{ $item->id }}">{{ $item->caracteristica->nombre}}</option>
+                            <option value="{{ $item->id }}" {{ old('presentacione_id') == $item->id ? 'selected' : '' }}>{{ $item->nombre}}</option>
                         @endforeach
                     </select>
                     @error('presentacione_id')
@@ -96,7 +97,7 @@
                     <select name="categorias[]" id="categorias" class="form-control selectpicker show-tick" data-live-search="true" multiple title="Selecciona una Categoria" data-size="5">
                         <!-- VAMOS A RECORRER LA VARIABLE MARCA PARA MOSTRARLO-->
                         @foreach ($categorias as $item)
-                            <option value="{{ $item->id }}">{{ $item->caracteristica->nombre}}</option>
+                            <option value="{{ $item->id }}" {{ (in_array($item->id, old('categorias',[]))) ? 'selected' : '' }}>{{ $item->nombre}}</option>
                         @endforeach
                     </select>
                     @error('categorias')

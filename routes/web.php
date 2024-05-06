@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 //RUTA PRINCIPAL DE LA PAGINA QUE CARGA POR DEFAULT HASTA EL MOMENTO
 Route::get('/', function () {
-    return view('template');
+    return view('panel.index');
 });
 
 //RUTA DE LA VISTA PARA QUE MUESTRE EL PANEL PRINCIPAL y podamos usarla con el nombre de panel para los route
