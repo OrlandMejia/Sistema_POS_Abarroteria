@@ -19,8 +19,10 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        //
-        return view('producto.index');
+        //DEVOLVEMOS TODOS LOS PRODUCTOS, con el punto hacemos referencia a su relacion con esa tabla ademas de latest que trae lo mas reciente ingresado
+        $productos = Producto::with(['categorias.caracteristica','marca.caracteristica','presentacione.caracteristica'])->latest()->get(); //with se usa para mostrar varias tablas en una sola consulta
+        //dd($productos);
+        return view('producto.index',['productos'=>$productos]);
     }
 
     /**

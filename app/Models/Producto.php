@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Producto extends Model
 {
@@ -43,8 +44,20 @@ class Producto extends Model
     public function hanBleUploadImage($image){
         $file = $image;
         $name = time().$file->getClientOriginalName();
-        $file->move(public_path().'/img/productos/',$name);
-
+        //$file->move(public_path().'/img/productos/',$name);
+        Storage::putFileAs('/public/productos/',$file,$name,'public');
         return $name;
     }
+
+    //FUNCION PARA MOSTRAR LA IMAGEN
+    public function getImageUrlAttribute()
+{
+    if ($this->imagen_path) {
+        return asset('/storage/app/public/productos/'.$this->imagen_path);
+    }
+    // Si no hay imagen, puedes retornar una imagen por defecto o null
+    // return asset('storage/default_image.jpg'); // Cambia 'default_image.jpg' por el nombre de tu imagen por defecto
+    return null;
+}
+
 }
