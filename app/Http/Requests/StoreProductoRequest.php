@@ -28,7 +28,7 @@ class StoreProductoRequest extends FormRequest
             'nombre'=> 'required|unique:productos,nombre|max:80',
             'descripcion' => 'nullable|max:255',
             'fecha_vencimiento' => 'nullable|date',
-            'img_path' => 'nullable|image|mimes:png,jpg,jpeg|max:2048', //TIPO image, MIMES SON LAS EXTENSIONES ACEPTADAS Y 2048 SON EQUIVALENTES A 2MB
+            'imagen_path' => 'nullable|image|mimes:png,jpg,jpeg|max:2048', //TIPO image, MIMES SON LAS EXTENSIONES ACEPTADAS Y 2048 SON EQUIVALENTES A 2MB
             //aca indicamos que este campo es requerido y es tipo entero y que debe existir en la tabla marcas en su campo de id
             'marca_id' => 'required|integer|exists:marcas,id',
             'presentacione_id' => 'required|integer|exists:presentaciones,id',

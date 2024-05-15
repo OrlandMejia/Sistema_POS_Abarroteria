@@ -8,6 +8,9 @@ use App\Models\Marca;
 use App\Models\Presentacione;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\DB;
+use Exception;
+use App\Models\Producto;
 
 class ProductoController extends Controller
 {
@@ -54,7 +57,38 @@ class ProductoController extends Controller
     public function store(StoreProductoRequest $request)
     {
         //
-        
+        try {
+            //code...
+            DB::beginTransaction();
+            $producto = new Producto();
+            if($request->hasFile('img_path')){
+                $name = $producto->hanBleUploadImage($request->file('img_path'));
+            }else{
+                $name = null;
+            }
+            $producto->fill([
+                'codigo' => $request->codigo,
+                'nombre' => $request->nombre,
+                'descripcion' => $request->descripcion,
+                'fecha_vencimiento' => $request->fecha_vencimiento,
+                'imagen_path' => $name,
+                'marca_id' => $request->marca_id,
+                'presentacione_id' => $request->presentacione_id
+            ]);
+
+            $producto->save();
+
+            //TABLA CATEGORIA PRODUCTO
+            $categorias =  $request->get('categorias');
+            $producto->categorias()->attach($categorias);
+            
+            DB::commit();
+        } catch (Exception $e) {
+            //throw $th;
+            dd($e);
+            DB::rollBack();
+        }
+        return redirect()->route('productos.index')->with('success','Producto Registrado');
         
     }
 

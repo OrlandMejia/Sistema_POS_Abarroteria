@@ -35,4 +35,16 @@ class Producto extends Model
     public function presentacione(){
         return $this->belongsTo(Presentacione::class);
     }
+
+    //AGREGAMOS LA VARIABLE FILLABLE
+    protected $fillable = ['codigo','nombre','descripcion','fecha_vencimiento','marca_id','presentacione_id','imagen_path'];
+
+    //CREAMOS UNA FUNCION EN EL MODELO PARA CARGAR LA IMAGEN
+    public function hanBleUploadImage($image){
+        $file = $image;
+        $name = time().$file->getClientOriginalName();
+        $file->move(public_path().'/img/productos/',$name);
+
+        return $name;
+    }
 }
