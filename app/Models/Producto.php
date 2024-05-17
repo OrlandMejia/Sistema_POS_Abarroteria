@@ -50,14 +50,5 @@ class Producto extends Model
     }
 
     //FUNCION PARA MOSTRAR LA IMAGEN
-    public function getImageUrlAttribute()
-{
-    if ($this->imagen_path) {
-        return asset('/storage/app/public/productos/'.$this->imagen_path);
-    }
-    // Si no hay imagen, puedes retornar una imagen por defecto o null
-    // return asset('storage/default_image.jpg'); // Cambia 'default_image.jpg' por el nombre de tu imagen por defecto
-    return null;
-}
 
 }

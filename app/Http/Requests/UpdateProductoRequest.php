@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreProductoRequest extends FormRequest
+class UpdateProductoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,11 +21,12 @@ class StoreProductoRequest extends FormRequest
      */
     public function rules(): array
     {
+        //RECUPERAMOS EL VALOR QUE TENIA EL PRODUCTO
+        $producto = $this->route('producto');
         return [
-            //CODIGO PARA VALIDACION DE DATOS
-            //ESTAS REGLAS APARECERÁN ABAJO COMO UNA ADVERTENCIA ANTES DE ENVIAR ALGUN DATO FUNCIONAN ALGO ASI COMO UN REQUIRED  en HTML
-            'codigo'=> 'required|unique:productos,codigo|max:50',
-            'nombre'=> 'required|unique:productos,nombre|max:80',
+            // REGLAS DE VALIDACIÓN
+            'codigo'=> 'required|unique:productos,codigo,'.$producto->id.'|max:50', // aca decimos que ignore que ya existe ese nombre que se guarda en esa variable para que no salte la validacion
+            'nombre'=> 'required|unique:productos,nombre,'.$producto->id.'|max:80', // significa que no es necesario cambiar el codigo o el nombre para editar algun aspecto
             'descripcion' => 'nullable|max:255',
             'fecha_vencimiento' => 'nullable|date',
             'imagen_path' => 'nullable|image|mimes:png,jpg,jpeg|max:2048', //TIPO image, MIMES SON LAS EXTENSIONES ACEPTADAS Y 2048 SON EQUIVALENTES A 2MB
@@ -51,5 +52,4 @@ class StoreProductoRequest extends FormRequest
             'codigo.required' => 'El Codigo es requerido para Registrar'
         ];
     }
-
 }

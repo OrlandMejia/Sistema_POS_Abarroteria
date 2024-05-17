@@ -11,7 +11,7 @@ class UpdatePresentacionesRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,13 @@ class UpdatePresentacionesRequest extends FormRequest
      */
     public function rules(): array
     {
+        //RECUPERAMOS LO QUE CONTIENE PRESENTACIONES
+        $presentaciones = $this->route('presentacione');
+        $caracteristicaId = $presentaciones->caracteristica->id;
         return [
             //
+            'nombre'=> 'required|max:60|unique:caracteristicas,nombre,'.$caracteristicaId,
+            'descripcion' => 'nullable|max:255'
         ];
     }
 }

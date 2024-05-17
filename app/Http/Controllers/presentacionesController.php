@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePresentacionesRequest;
+use App\Http\Requests\UpdatePresentacionesRequest;
 use App\Models\Caracteristica;
 use App\Models\Presentacione;
 use Exception;
@@ -66,17 +67,23 @@ class presentacionesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Presentacione $presentacione)
     {
         //
+        //dd($presentaciones);
+
+        return view('presentacione.edit',compact('presentacione'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdatePresentacionesRequest $request, Presentacione $presentacione)
     {
-        //
+        //PROCESO DE ACTUALIZACION
+        Caracteristica::where('id',$presentacione->caracteristica->id)->update($request->validated());
+        return redirect()->route('presentaciones.index')->with('success','!Presentación Actualizada con Exito!');
+        
     }
 
     /**

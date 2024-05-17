@@ -54,7 +54,6 @@
                         <tr>
                             <th>Código</th>
                             <th>Nombre</th>
-                            <th>Descripción</th>
                             <th>Marca</th>
                             <th>Presentación</th>
                             <th>Categorias</th>
@@ -67,7 +66,6 @@
                             <tr>
                                 <td>{{ $item->codigo }}</td>
                                 <td>{{ $item->nombre }}</td>
-                                <td>{{ $item->descripcion }}</td>
                                 <td>{{ $item->marca->caracteristica->nombre }}</td>
                                 <td>{{ $item->presentacione->caracteristica->nombre }}</td>
                                 <td>
@@ -75,7 +73,7 @@
                                         <div class="container">
                                             <div class="row">
                                                 <span
-                                                    class="m-1 rounded-pill p-1 bg-primary text-white text-center">{{ $categoria->caracteristica->nombre }}</span>
+                                                    class="m-1 rounded-pill p-1 bg-info text-white text-center"><strong><em>{{ $categoria->caracteristica->nombre }}</em></strong></span>
                                             </div>
                                         </div>
                                     @endforeach
@@ -85,9 +83,9 @@
                                                 ENTONCES MUESTRA UN SPAN CON UN FW BOLDER PARA QUE APAREZCA EN NEGRITA, UN ROUNDED PARA QUE SEA CON
                                                 BORDER REDONDEADOS, UN PADDING P-1 DE UNO, UN BACKGROUND BG-SUCCESS Y UN TEXTO BLANCO WITHE-->
                                     @if ($item->estado == 1)
-                                        <span class="rounded p-1 bg-success text-white">Activo</span>
+                                        <span class="rounded p-1 bg-success text-white"><i class="fa-solid fa-check"></i> Activo</span>
                                     @else
-                                        <span class="rounded p-1 bg-danger text-white">Eliminado</span>
+                                        <span class="rounded p-1 bg-danger text-white"><i class="fa-solid fa-x"></i> Eliminado</span>
                                     @endif
                                 </td>
                                 <!--PARA LAS ACCIONES-->
@@ -132,8 +130,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-bs-dismiss="modal">Cerrar</button>
-                                            <form action="{{ route('productos.destroy', ['producto' => $item]) }}"
-                                                method="POST">
+                                            <form action="{{ route('productos.destroy', ['producto' => $item]) }}"method="POST">
                                                 @method('DELETE')
                                                 @csrf
                                                 @if ($item->estado == 1)
@@ -163,6 +160,9 @@
                                             </div>
                                             <div class="row mb-3">
                                                 <label for="Stock" class=""><strong>Fecha Vencimiento:</strong> {{ $item->fecha_vencimiento}}</label>   
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label for="Stock" class=""><strong>Descripción:</strong> {{ $item->descripcion}}</label>
                                             </div>
                                             <div class="row mb-3">
                                                 <label><strong>Imagen:</strong></label>

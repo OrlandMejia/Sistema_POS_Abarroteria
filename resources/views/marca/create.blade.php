@@ -38,7 +38,7 @@
                     <textarea name="descripcion" placeholder="Ingrese su descripción" id="descripcion"  rows="3" class="form-control">{{ old('descripcion') }}</textarea>
                 </div>
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button>
                 </div>
             </div>
         </form>
